@@ -1,0 +1,24 @@
+[submodule "google-java-17"]
+	path = google-java-17
+	url = https://repo1.dso.mil/dsop/google/distroless/java-17.git
+[submodule "google-java-11"]
+	path = google-java-11
+	url = https://repo1.dso.mil/dsop/google/distroless/java-11.git
+[submodule "google-java-21"]
+	path = google-java-21
+	url = https://repo1.dso.mil/dsop/google/distroless/java-21.git
+[submodule "openjdk17-runtime-ubi9-slim"]
+	path = openjdk17-runtime-ubi9-slim
+	url = https://repo1.dso.mil/dsop/redhat/openjdk/openjdk17.x/openjdk17-runtime-ubi9-slim.git
+[submodule "openjdk17"]
+	path = openjdk17
+	url = https://repo1.dso.mil/dsop/redhat/openjdk/openjdk17.x/openjdk17.git
+[submodule "openjdk17-slim"]
+	path = openjdk17-slim
+	url = https://repo1.dso.mil/dsop/redhat/openjdk/openjdk17.x/openjdk17-slim.git
+[submodule "openjdk17-devel"]
+	path = openjdk17-devel
+	url = https://repo1.dso.mil/dsop/redhat/openjdk/openjdk17.x/openjdk17-devel
+[submodule "nexus-ib"]
+	path = nexus-ib
+	url = https://repo1.dso.mil/dsop/sonatype/nexus/nexus.git
