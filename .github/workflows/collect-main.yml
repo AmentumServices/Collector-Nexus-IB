@@ -50,7 +50,9 @@ jobs:
       - name: Directory Contents
         run: |
           echo "Directory Contents"
-          ls -lahR
+          ls -lAhS *
+          echo -e "\nDirectory Size"
+          du -hd1 
 
       - name: Upload TARchive
         uses: actions/upload-artifact@v4
