@@ -1,4 +1,4 @@
-name: JDK 17 IB Collector (Branch)
+name: Nexus IB Collector (Branch)
 run-name: ${{ github.actor }} is Collecting 🚀
 on:
   push:
@@ -29,21 +29,14 @@ jobs:
           sudo apt-get update -y
           sudo apt-get install -y skopeo
 
-      - name: Skopeo Login
+      - name: DSO Login
         run: |
           skopeo login registry1.dso.mil -u ${{ secrets.REGISTRY_USER }} -p ${{ secrets.REGISTRY_TOKEN }}
-          skopeo login docker.io -u ${{ secrets.DOCKERHUB_USER }} -p ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Run Skopeo Sync
         run: |
           skopeo sync \
-              --src-creds=${{ secrets.REGISTRY_USER }}:${{ secrets.REGISTRY_TOKEN }} \
               --src yaml --dest dir ${{ vars.COLLECTOR }}.yml ${{ vars.COLLECTOR }}
-
-      - name: TARchive Skopeo Output
-        run: |
-          tar -cvzf ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.tgz ${{ vars.COLLECTOR }}
-          ls -AlSh ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.tgz
 
       - name: Directory Contents
         run: |
@@ -51,6 +44,12 @@ jobs:
           ls -lAhS *
           echo -e "\nDirectory Size"
           du -hd1 
+
+      - name: TARchive Skopeo Output
+        run: |
+          tar -cvz  --remove-files \
+            -f ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.tgz ${{ vars.COLLECTOR }}
+          ls -alh ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.tgz
 
       - name: Upload TARchive
         uses: actions/upload-artifact@v4
@@ -77,7 +76,7 @@ jobs:
       - name: Bundle Repo1 code base for ${{ vars.COLLECTOR }}
         run: |
           git bundle create --progress ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.bundle --all
-          ls -lAht *
+          ls -Alht *
 
       - name: Upload bundle
         uses: actions/upload-artifact@v4
