@@ -52,14 +52,17 @@ jobs:
 
       - name: Grab helm
         run: |
-          mkdir -p helmchart
-          cd helmchart
-          echo -e "\nPull chart"
-          helm pull https://sonatype.github.io/helm3-charts/nxrm-ha
+          mkdir -p ${{ vars.COLLECTOR }}/helmchart
+          cd ${{ vars.COLLECTOR }}/helmchart
+          echo -e "\nSet repo and pull chart"
+          helm repo add nxrm-ha https://sonatype.github.io/helm3-charts/
+          helm pull nxrm-ha/nxrm-ha
           echo -e "\nInstall helm images plugin"
           helm plugin install https://github.com/nikhilsbhat/helm-images
           echo -e "\nImages listed in chart"
-          helm images get https://sonatype.github.io/helm3-charts/nxrm-ha
+          helm images get nxrm-ha/nxrm-ha
+          sha256sum -b * \
+          | tee ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.helm.sha
 
       - name: Directory Contents
         run: |
@@ -172,7 +175,12 @@ jobs:
           mkdir -p ${{ vars.COLLECTOR }}/helmchart
           cd ${{ vars.COLLECTOR }}/helmchart
           echo -e "\nSet repo and pull chart"
-          helm pull https://sonatype.github.io/helm3-charts/nxrm-ha
+          helm repo add nxrm-ha https://sonatype.github.io/helm3-charts/
+          helm pull nxrm-ha/nxrm-ha
+          echo -e "\nInstall helm images plugin"
+          helm plugin install https://github.com/nikhilsbhat/helm-images
+          echo -e "\nImages listed in chart"
+          helm images get nxrm-ha/nxrm-ha
           sha256sum -b * \
           | tee ${{ vars.COLLECTOR }}-${{ needs.Date.outputs.Date }}.helm.sha
 
